@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Dict, Any
 
 
 class AnalizadorEventos:
@@ -10,7 +10,7 @@ class AnalizadorEventos:
         eventos_por_tipo = {}
         eventos_por_servidor = {}
 
-        with open(self.nombre_archivo) as archivo:
+        with open(self.nombre_archivo, encoding="utf-8") as archivo:
             for linea in archivo:
                 if linea.startswith("Fecha"):
                     eventos_totales += 1
@@ -29,8 +29,6 @@ class AnalizadorEventos:
                         eventos_por_servidor[servidor] += 1
                     else:
                         eventos_por_servidor[servidor] = 1
-                elif linea.startswith("Descripción"):
-                    _, descripcion_evento = linea.split(": ")
 
         calculo = {
             "Número total de eventos registrados": eventos_totales,
@@ -38,10 +36,10 @@ class AnalizadorEventos:
             "Número de eventos por servidor": eventos_por_servidor
         }
 
-        print(calculo)
+        return calculo
 
 
 eventos = AnalizadorEventos("archivo.txt")
 
-eventos.procesar_eventos()
+print(eventos.procesar_eventos())
 
